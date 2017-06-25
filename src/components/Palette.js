@@ -66,7 +66,7 @@ const rotate = keyframes`
 `
 
 const Icon = styled(LoadingIcon)`
-  display: inline-block;
+  display: block;
   margin: auto;
   font-size: 32px;
   animation: ${rotate} 1s linear infinite;
@@ -127,7 +127,7 @@ class Palette extends Component {
           ) : (
             <Placeholder>
               <Icon />
-              <div>Generating the palette. Time may vary depending on the image size.</div>
+              <span>Generating the palette. Time may vary depending on the image size.</span>
             </Placeholder>
           )}
         </Colors>
