@@ -5,6 +5,7 @@ import Theme from './Theme'
 import Header from './Header'
 import DropZone from './DropZone'
 import Palette from './Palette'
+import SnackBar from './SnackBar'
 
 const Container = styled.div`
   max-width: ${({ theme }) => theme.dimens.maxWidth};
@@ -16,10 +17,29 @@ class App extends Component {
     super(props)
 
     this.state = {
-      palettes: []
+      palettes: [],
+      snackbar: { show: false }
     }
 
     this.handleFiles = this.handleFiles.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.emitter.addListener('sw:install', () => {
+      this.setState({
+        snackbar: {
+          type: 'info',
+          message: 'Palette Makr is now usable offline.',
+          show: true
+        }
+      })
+
+      setTimeout(() => {
+        this.setState({
+          snackbar: { show: false }
+        })
+      }, 5000)
+    })
   }
 
   handleFiles (files) {
@@ -50,6 +70,8 @@ class App extends Component {
               />
             ))}
           </Container>
+
+          <SnackBar {...this.state.snackbar} />
         </div>
       </Theme>
     )

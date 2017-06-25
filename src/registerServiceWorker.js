@@ -1,4 +1,4 @@
-export default function register () {
+export default function register (emitter) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
@@ -12,6 +12,7 @@ export default function register () {
                 if (navigator.serviceWorker.controller) {
                   console.log('New content is available; please refresh.')
                 } else {
+                  emitter.emit('sw:install')
                   console.log('Content is cached for offline use.')
                 }
               }
