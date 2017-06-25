@@ -12,7 +12,7 @@ const Title = styled.h1`
   position: relative;
   font-size: 64px;
   text-transform: uppercase;
-  color: #fff;
+  color: #313131;
   font-family: ${({ theme }) => theme.font.secondary}
 `
 

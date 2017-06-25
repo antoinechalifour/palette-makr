@@ -19,7 +19,6 @@ const theme = {
 
 const Container = styled.div`
   font-family: Helvetica, Arial, sans-serif;
-  background: #f7f7f9;
   font-size: ${({ theme }) => theme.font.size};
   line-height: 1.7;
   font-family: ${({ theme }) => theme.font.primary};
