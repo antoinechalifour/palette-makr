@@ -62,14 +62,16 @@ const getDataTransferFiles = e => {
   const dt = e.dataTransfer
   const files = []
 
-  if (dt.items) {
+  if (dt && dt.items) {
     for (let i = 0; i < dt.items.length; i += 1) {
       if (dt.items[i].kind === 'file') {
         files.push(dt.items[i].getAsFile())
       }
     }
-  } else {
+  } else if (dt) {
     files.push(...dt.files)
+  } else {
+    files.push(...e.target.files)
   }
 
   return files
@@ -83,9 +85,22 @@ class DropZone extends Component {
       draggedOver: false
     }
 
+    this.handleClick = this.handleClick.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleDragOver = this.handleDragOver.bind(this)
     this.handleDragLeave = this.handleDragLeave.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
+  }
+
+  handleClick () {
+    if (this.input) {
+      this.input.value = ''
+      this.input.click()
+    }
+  }
+
+  handleInputChange (e) {
+    this.handleDrop(e)
   }
 
   handleDragOver (e) {
@@ -120,9 +135,16 @@ class DropZone extends Component {
 
     return (
       <Container>
+        <input
+          type='file'
+          style={{ display: 'none' }}
+          ref={e => (this.input = e)}
+          onChange={this.handleInputChange}
+        />
         <Background />
         {React.createElement(Wrapper, null,
           <Card
+            onClick={this.handleClick}
             onDragOver={this.handleDragOver}
             onDragLeave={this.handleDragLeave}
             onDrop={this.handleDrop}
